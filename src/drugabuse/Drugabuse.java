@@ -167,20 +167,21 @@ public class Drugabuse {
 	
 	public static void main(String[] args)
 	  { 
-		
+		int count=0;
 	    try
 	    {
 	      String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
 	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
-	     String query_search = "select * from aid_gs_disease";
+	     String query_search = "select * from aid_gs_disease order by aid";
 	     ResultSet rs = conn.createStatement().executeQuery(query_search);
 	     while(rs.next()){
-	        
-	         System.out.println(rs.getInt("aid"));
+	         count++;
+	         //System.out.println(rs.getInt("aid"));
 	    	 Network_creator(rs.getInt("aid"),conn);
 	      
 	     }
 	     
+	     System.out.println(count++);
 	     
 	      
 	    }
