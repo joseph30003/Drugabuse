@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
+
 public class Node_extractor {
 	
 	public static void Nodes_add (String node, String type, String table, Connection conn )  {
@@ -23,6 +25,11 @@ public class Node_extractor {
 	      ResultSet rs = st.executeQuery(query);
 	     if (!rs.next()){
 	    	
+	    	    PreparedStatement rs_u = (PreparedStatement) conn.prepareStatement("INSERT INTO "+table+"(node,type) VALUES(?,?)");
+				
+				rs_u.setString(1, node);
+				rs_u.setString(1, type);
+				rs_u.execute();
 	    	   	  
 	    	   
 	      }
