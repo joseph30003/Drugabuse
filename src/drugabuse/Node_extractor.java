@@ -15,7 +15,7 @@ public class Node_extractor {
 		
 		try{   
 		
-			String query = "SELECT * FROM "+table+" where "+"node"+" ="+node;
+			String query = "SELECT * FROM "+table+" where "+"node = \""+node+"\" and type = \""+type+"\"";
 		 
 		
 	      // create the java statement
@@ -28,7 +28,7 @@ public class Node_extractor {
 	    	    PreparedStatement rs_u = (PreparedStatement) conn.prepareStatement("INSERT INTO "+table+"(node,type) VALUES(?,?)");
 				
 				rs_u.setString(1, node);
-				rs_u.setString(1, type);
+				rs_u.setString(2, type);
 				rs_u.execute();
 	    	   	  
 	    	   
@@ -46,14 +46,21 @@ public class Node_extractor {
 	
 	public static void main(String[] args)
 	  { 
-		int count=0;
+		
 	    try
 	    {
 	      String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
 	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
-	    
-	     
-	     System.out.println(count++);
+	      String query_1 = "SELECT node1_name,node1_type FROM edges_withoutAID";
+	      ResultSet rs_1 = conn.createStatement().executeQuery(query_1);
+	      while(rs_1.next()){
+	    	  Nodes_add(rs_1.getString("node1_name"),rs_1.getString("node1_type"),"nodes_withoutAID",conn);
+	      }
+	      String query_2 = "SELECT node2_name,node2_type FROM edges_withoutAID";
+	      ResultSet rs_2 = conn.createStatement().executeQuery(query_2);
+	      while(rs_2.next()){
+	    	  Nodes_add(rs_2.getString("node2_name"),rs_2.getString("node2_type"),"nodes_withoutAID",conn);
+	      }
 	     
 	      
 	    }
