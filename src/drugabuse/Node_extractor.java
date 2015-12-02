@@ -44,22 +44,47 @@ public class Node_extractor {
 	
 	
 	
+	public static void Nodes_extrator (String column1, String column2, String table, Connection conn ) {
+	
+		try
+		{
+			String query = "SELECT "+column1+","+column2+"FROM"+table;
+		
+	      ResultSet rs = conn.createStatement().executeQuery(query);
+	      while(rs.next()){
+	    	  Nodes_add(rs.getString(column1),rs.getString(column2),table,conn);
+	      }
+		}
+		catch (Exception e)
+	    {
+	      System.err.println("Got an exception! ");
+	      e.printStackTrace();
+	    }
+	}
+	
+	
+	
+	
 	public static void main(String[] args)
 	  { 
-		
+		float ave;
 	    try
 	    {
 	      String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
 	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
-	      String query_1 = "SELECT node1_name,node1_type FROM edges_withoutAID";
-	      ResultSet rs_1 = conn.createStatement().executeQuery(query_1);
-	      while(rs_1.next()){
-	    	  Nodes_add(rs_1.getString("node1_name"),rs_1.getString("node1_type"),"nodes_withoutAID",conn);
-	      }
-	      String query_2 = "SELECT node2_name,node2_type FROM edges_withoutAID";
+	      
+	      String query_2 = "SELECT node1_name,node2_name,connects,scores FROM edges_withoutAID";
 	      ResultSet rs_2 = conn.createStatement().executeQuery(query_2);
 	      while(rs_2.next()){
-	    	  Nodes_add(rs_2.getString("node2_name"),rs_2.getString("node2_type"),"nodes_withoutAID",conn);
+	    	  if(rs_2.getInt("scores")!=0){
+	    		  ave= rs_2.getInt("scores")/rs_2.getInt("connects");
+	    	  }else{
+	    		  ave=rs_2.getInt("connects");
+	    	  }
+	    	  
+	    	  
+	    	  
+	    	  Files_creator.writetofile(rs_2.getString("node1_name")+","+rs_2.getString("node2_name")+","+ave,"edges");
 	      }
 	     
 	      
