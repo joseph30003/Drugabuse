@@ -67,24 +67,17 @@ public class Node_extractor {
 	
 	public static void main(String[] args)
 	  { 
-		float ave;
+		
 	    try
 	    {
 	      String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
 	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
 	      
-	      String query_2 = "SELECT node1_name,node2_name,connects,scores FROM edges_withoutAID";
+	      String query_2 = "SELECT id,name,type FROM nodes_withid";
 	      ResultSet rs_2 = conn.createStatement().executeQuery(query_2);
 	      while(rs_2.next()){
-	    	  if(rs_2.getInt("scores")!=0){
-	    		  ave= rs_2.getInt("scores")/rs_2.getInt("connects");
-	    	  }else{
-	    		  ave=rs_2.getInt("connects");
-	    	  }
-	    	  
-	    	  
-	    	  
-	    	  Files_creator.writetofile(rs_2.getString("node1_name")+","+rs_2.getString("node2_name")+","+ave,"edges");
+	    	   
+	    	  Files_creator.writetofile(rs_2.getString(1)+","+rs_2.getString(2)+","+rs_2.getString(3),"nodes_id_list");
 	      }
 	     
 	      
