@@ -12,7 +12,7 @@ public class Test {
 	  { 
 		String[] attribute={"network.Degree","network.Closeness_Centrality","network.Betweenness_Centrality"};
 		String[] type={"gene","disease","cid"};
-		String filename="result.txt";
+		String filename="result_3.txt";
 		List<String> node = new ArrayList<String>();
 		
 		int count=0;
@@ -29,7 +29,7 @@ public class Test {
 	      System.out.println(query);
 	      ResultSet rs = conn.createStatement().executeQuery(query);
 	      count=0;
-	      while(rs.next()&&count<5){
+	      while(rs.next()&&count<3){
 	    	   count++;
 	    	   Files_creator.writetofile(rs.getString(1)+","+rs.getString(2)+","+rs.getDouble(3),filename);
 	    	   if(!node.contains(rs.getString(1))){

@@ -11,18 +11,47 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class Network_generator {
 
+public static boolean Edges_contains(String node1,String node2,Connection conn) {
+		boolean result = false;
+	    
+    	try{
+    		
+    		String query = "select * from edges_sub where node1="+node2+" and node2="+node1;
+    		System.out.println(query); 
+    		ResultSet rs = conn.createStatement().executeQuery(query);
+    		  
+    	     
+    		if(rs.next()){
+    			
+    			result = true;
+    		}	
+    		
+    			
+    	}
+    	catch (Exception e)
+        {
+          System.err.println("Got an exception! ");
+          System.err.println(e.getMessage());
+        }
+		return result;
+	}	
+	
+
+	
+	
 	public static void Edges_update(String node1,List<String> node2,Connection conn) {
 		
 	    
     	try{
-    		
+    		    PreparedStatement pst_user =  (PreparedStatement) conn.prepareStatement("INSERT INTO edges_sub(node1,node2) VALUES(?,?)");
     			for (int i=0; i<node2.size();i++){
     				
-    				PreparedStatement pst_user =  (PreparedStatement) conn.prepareStatement("INSERT INTO edges_sub(node1,node2) VALUES(?,?)");
+    				if(!Edges_contains(node1,node2.get(i),conn)){
     	            pst_user.setString(1, node1);
     	            pst_user.setString(2, node2.get(i));
     	            
     	            pst_user.execute();
+    				}
     				
     			}
     			
@@ -34,6 +63,10 @@ public class Network_generator {
         }
 	}	
     	
+	
+	
+	
+	
 	public static void Nodes_update(String node,Connection conn) {
     		
     	    
@@ -141,7 +174,7 @@ public class Network_generator {
 	      String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
 	      
 	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
-	      relations_list.add("17627");
+	      relations_list.add("17636");
 	      
 	      
 	      while(relations_list.size()>0){
