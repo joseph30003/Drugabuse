@@ -11,7 +11,7 @@ public class TMP {
 		
 	    HashMap<Integer, Integer> datamap = new HashMap<Integer, Integer>();
 	    
-		File file = new File("C:/Users/xf37538/Documents/data-nexcade/1.txt");
+		File file = new File("C:/Users/joseph/Documents/DATA/DATA.nodes.select");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		
 		String line=null;

@@ -1,6 +1,8 @@
 package drugabuse;
 
 import java.net.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.io.*;
 
 public class URL_reader {
@@ -15,4 +17,17 @@ public class URL_reader {
         in.close();
         return inputLine;
     }
+    
+    public static void main(String[] args) throws Exception{
+    	String myUrl = "jdbc:mysql://biomedinformatics.is.umbc.edu/drugabuse";
+	      Connection conn = DriverManager.getConnection(myUrl, "weijianqin", "weijianqin");
+    	
+    	
+    	
+    	
+    	Test.Name_nodes(7675, conn);
+    }
+    
+    
+    
 }
