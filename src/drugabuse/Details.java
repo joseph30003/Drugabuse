@@ -1,9 +1,7 @@
 package drugabuse;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Iterator;
-import java.util.Set;
+
 public class Details {
 
    public static void main(String args[]) {
